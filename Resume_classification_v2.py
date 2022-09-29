@@ -8,29 +8,6 @@ import pickle
 import os
 from streamlit_tags import st_tags
 from pyresparser import ResumeParser
-    
-# def image(image_file):
-#     l = []
-#     img = cv2.imread(image_file)
-#     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-#     ret, thresh1 = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)
-#     rect_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (18, 18))
-#     dilation = cv2.dilate(thresh1, rect_kernel, iterations = 1)
-#     contours, hierarchy = cv2.findContours(dilation, cv2.RETR_EXTERNAL,
-#     cv2.CHAIN_APPROX_NONE)
-#     im2 = img.copy()
-#     for cnt in contours:
-#         x, y, w, h = cv2.boundingRect(cnt)
-#         rect = cv2.rectangle(im2, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#         cropped = im2[y:y + h, x:x + w]
-#         text = pytesseract.image_to_string(cropped)
-#         l.append(text)
-#         wor = ['%','\n']
-#         for word in wor:
-#             for i in range(len(l)):
-#                 if word in l[i]:
-#                     l[i] = l[i].replace(word,'')
-#     return l
 
       
 def remove_brackets(data):
@@ -111,6 +88,7 @@ def main():
         st.subheader("Files")
         uploaded_files = st.file_uploader("Upload your resume", type=["pdf","docx","doc"],accept_multiple_files=True)
         for uploaded_file in uploaded_files:
+            c=c+1
             x = save_uploadedfile(uploaded_file)
             if x.split('.')[-1] == 'doc':
                 doc = aw.Document(x)
