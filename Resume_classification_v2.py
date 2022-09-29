@@ -5,7 +5,7 @@ import pickle
 import os
 from streamlit_tags import st_tags
 from pyresparser import ResumeParser
-
+nltk.download('stopwords')
     
 # def image(image_file):
 #     l = []
