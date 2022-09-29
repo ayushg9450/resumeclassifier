@@ -6,7 +6,7 @@ import os
 from streamlit_tags import st_tags
 from pyresparser import ResumeParser
 import nltk
-nltk.download('stopwords')
+nltk.download()
     
 # def image(image_file):
 #     l = []
