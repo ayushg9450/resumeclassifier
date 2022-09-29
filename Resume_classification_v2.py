@@ -36,8 +36,8 @@ def prediction(skills_data):
 
 def save_uploadedfile(uploadedfile):
     
-    with open(os.path.join(r"/home",uploadedfile.name),"wb") as f:
-        x = os.path.join(r"/home",uploadedfile.name)
+    with open(os.path.join(r"./",uploadedfile.name),"wb") as f:
+        x = os.path.join(r"./",uploadedfile.name)
         f.write(uploadedfile.getbuffer())
     return x
 
@@ -92,7 +92,7 @@ def main():
             x = save_uploadedfile(uploaded_file)
             if x.split('.')[-1] == 'doc':
                 doc = aw.Document(x)
-                x = os.path.join(r"/home",uploaded_file.name+'.pdf')
+                x = os.path.join(r"./",uploaded_file.name+'.pdf')
                 doc.save(x)
                 data(x,str(c))
                 
@@ -111,7 +111,7 @@ def main():
                 x = save_uploadedfile(uploaded_file)
                 if x.split('.')[-1] == 'doc':
                     doc = aw.Document(x)
-                    x = os.path.join(r"/home",uploaded_file.name+'.pdf')
+                    x = os.path.join(r"./",uploaded_file.name+'.pdf')
                     doc.save(x)
                     s = data(x,str(c))
                     count = 0
