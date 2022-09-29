@@ -1,5 +1,6 @@
 streamlit
 streamlit-tags
+stop-words
 nltk==3.7
 tqdm==4.64.0
 joblib==1.1.0
