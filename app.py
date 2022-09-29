@@ -1,7 +1,7 @@
 import nltk
 #nltk.download('stopwords', download_dir='/usr/local/share/nltk_data')
-#nltk.data.path.append('/usr/local/share/nltk_data')
-!python -m nltk.downloader stopwords
+nltk.data.path.append('/stopwords.zip')
+#!python -m nltk.downloader stopwords
 import os
 import pickle
 import aspose.words as aw
