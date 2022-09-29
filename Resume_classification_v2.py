@@ -1,3 +1,6 @@
+import nltk
+nltk.download('stopwords', download_dir='/home/appuser/nltk_data')
+nltk.data.path.append('/home/appuser/nltk_data')
 import pandas as pd
 import aspose.words as aw
 import streamlit as st
@@ -5,8 +8,6 @@ import pickle
 import os
 from streamlit_tags import st_tags
 from pyresparser import ResumeParser
-import nltk
-nltk.download()
     
 # def image(image_file):
 #     l = []
