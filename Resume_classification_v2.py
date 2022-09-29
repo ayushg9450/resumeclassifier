@@ -1,39 +1,11 @@
 import pandas as pd
 import aspose.words as aw
 import streamlit as st
-from PIL import Image
-import PyPDF2
-import cv2
 import pickle
-import re
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import CountVectorizer
-import pyperclip
 import os
-import string
 from streamlit_tags import st_tags
 from pyresparser import ResumeParser
 
-import textract
-#import nltk
-#nltk.download('stopwords')
-
-
-
-def pdf(pdf_file):
-    pdffileobj=open(pdf_file,'rb')
-    #data_1 = ResumeParser(pdfFile).get_extracted_data()
-    pdfReader = PyPDF2.PdfFileReader(pdffileobj)
-    num_pages = pdfReader.numPages
-    count = 0
-    text = ""
-    while count < num_pages:
-        pageObj = pdfReader.getPage(count)
-        count +=1
-        text += pageObj.extractText()
-        
-    return text
     
 # def image(image_file):
 #     l = []
@@ -58,10 +30,6 @@ def pdf(pdf_file):
 #                     l[i] = l[i].replace(word,'')
 #     return l
 
-
-import img2pdf
-from PIL import Image
-import os
       
 def remove_brackets(data):
     data = data.replace('[','')
@@ -124,21 +92,8 @@ def data(x,key_):
             pass
 
     keywords = st_tags(label='### Skills that you have',
-            value=resume_data['skills'],key = key_)
-
-    #job_data = job_data['skills']
-
-    #resume_1 = resume_data['skills']
-    #count = 0
-    #for i in resume_1:
-     #   if i in job_data:
-      #      count +=1
-
-    #sim_score = count/len(job_data)
-    #sim_score = sim_score * 100
-    #st.success("Job Fittment: "+ str(sim_score))   
-
-
+            value=resume_data['skills'],key = key_)   
+            
     reco_field = prediction(resume_data_1)
     return resume_data_1
     
@@ -159,10 +114,10 @@ def main():
                 doc = aw.Document(x)
                 x = os.path.join(r"C:\Users\AyushKumar.Gupta\Downloads",uploaded_file.name+'.pdf')
                 doc.save(x)
-                data(x)
+                data(x,str(c))
                 
             else:
-                data(x)
+                data(x,str(c))
                 
     elif choice == 'Job_Match':
         st.subheader("Files")
