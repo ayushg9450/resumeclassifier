@@ -1,6 +1,6 @@
 import nltk
 nltk.download('stopwords')
-#nltk.data.path.append('/usr/share/nltk_data')
+nltk.download('punkt')
 import pandas as pd
 import aspose.words as aw
 import streamlit as st
