@@ -1,3 +1,7 @@
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
+#nltk.data.path.append('/usr/share/nltk_data')
 import os
 import pickle
 import aspose.words as aw

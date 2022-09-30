@@ -1,6 +1,6 @@
 import nltk
-nltk.download('stopwords', download_dir='./')
-nltk.data.path.append('./')
+nltk.download('stopwords')
+nltk.download('punkt')
 import pandas as pd
 import aspose.words as aw
 import streamlit as st
@@ -41,21 +41,21 @@ def save_uploadedfile(uploadedfile):
         f.write(uploadedfile.getbuffer())
     return x
 
-def data_1(x):
-    resume_data = ResumeParser(x).get_extracted_data()  
-    resume_data_1 = resume_data['skills']
-    for i in range(len(resume_data_1)):
-        resume_data_1[i] = resume_data_1[i].lower()
-        
-    return resume_data_1
+def data_extraction_jd(x):
+    jd_data = ResumeParser(x).get_extracted_data()  
+    jd_data_skills = jd_data['skills']
+    for i in range(len(jd_data_skills)):
+        jd_data_skills[i] = jd_data_skills[i].lower()    
+    return jd_data_skills
+    
     
 
-def data(x,key_):
+def data_extraction_resume(x,key_):
     
     resume_data = ResumeParser(x).get_extracted_data()  
-    resume_data_1 = resume_data['skills']
-    for i in range(len(resume_data_1)):
-        resume_data_1[i] = resume_data_1[i].lower()
+    resume_data_skills = resume_data['skills']
+    for i in range(len(resume_data_skills)):
+        resume_data_skills[i] = resume_data_skills[i].lower()
     if resume_data:
     ## Get the whole resume data
 
@@ -73,8 +73,8 @@ def data(x,key_):
     keywords = st_tags(label='### Skills that you have',
             value=resume_data['skills'],key = key_)   
             
-    reco_field = prediction(resume_data_1)
-    return resume_data_1
+    prediction(resume_data_skills)
+    return resume_data_skills
     
     
 
@@ -89,48 +89,48 @@ def main():
         uploaded_files = st.file_uploader("Upload your resume", type=["pdf","docx","doc"],accept_multiple_files=True)
         for uploaded_file in uploaded_files:
             c=c+1
-            x = save_uploadedfile(uploaded_file)
-            if x.split('.')[-1] == 'doc':
+            resume_file = save_uploadedfile(uploaded_file)
+            if resume_file.split('.')[-1] == 'doc':
                 doc = aw.Document(x)
-                x = os.path.join(r"./",uploaded_file.name+'.pdf')
-                doc.save(x)
-                data(x,str(c))
+                resume_file = os.path.join(r"./",uploaded_file.name+'.pdf')
+                doc.save(resume_file)
+                data_extraction_resume(resume_file,str(c))
                 
             else:
-                data(x,str(c))
+                data_extraction_resume(resume_file,str(c))
                 
     elif choice == 'Job_Match':
         st.subheader("Files")
         uploaded_files = st.file_uploader("Upload candidate resume", type=["pdf","docx","doc"],accept_multiple_files=True)
         job_files = st.file_uploader("Choose job description file", type=["pdf"],accept_multiple_files=True)
         for job_file in job_files:
-            x = save_uploadedfile(job_file)
-            k = data_1(x)
+            job_file = save_uploadedfile(job_file)
+            required_skill = data_extraction_jd(job_file)
             for uploaded_file in uploaded_files:
                 c=c+1
-                x = save_uploadedfile(uploaded_file)
-                if x.split('.')[-1] == 'doc':
-                    doc = aw.Document(x)
-                    x = os.path.join(r"./",uploaded_file.name+'.pdf')
-                    doc.save(x)
-                    s = data(x,str(c))
+                resume_file = save_uploadedfile(uploaded_file)
+                if resume_file.split('.')[-1] == 'doc':
+                    doc = aw.Document(resume_file)
+                    resume_file = os.path.join(r"./",uploaded_file.name+'.pdf')
+                    doc.save(resume_file)
+                    candidate_skill = data_extraction_resume(resume_file,str(c))
                     count = 0
-                    for i in k:
-                        if i in s:
+                    for i in required_skill:
+                        if i in candidate_skill:
                             count +=1
 
-                    sim_score = count/len(k)
+                    sim_score = count/len(required_skill)
                     sim_score = sim_score * 100
                     st.success("Job Fittment: "+ str(sim_score)) 
 
                 else: 
-                    s = data(x,str(c))
+                    candidate_skill = data_extraction_resume(resume_file,str(c))
                     count = 0
-                    for i in k:
-                        if i in s:
+                    for i in required_skill:
+                        if i in candidate_skill:
                             count +=1
 
-                    sim_score = count/len(k)
+                    sim_score = count/len(required_skill)
                     sim_score = sim_score * 100
                     st.success("Job Fittment: "+ str(sim_score))          
             
