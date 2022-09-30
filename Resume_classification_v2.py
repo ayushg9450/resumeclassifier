@@ -1,6 +1,6 @@
 import nltk
-nltk.download('stopwords', download_dir='/usr/share/nltk_data')
-nltk.data.path.append('/usr/share/nltk_data')
+nltk.download('stopwords')
+#nltk.data.path.append('/usr/share/nltk_data')
 import pandas as pd
 import aspose.words as aw
 import streamlit as st
